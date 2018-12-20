@@ -3,17 +3,16 @@ package ch.randelshofer.stats;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.DoubleStream;
 
 import static java.lang.Math.sqrt;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SampleStatisticsTest {
     @TestFactory
     public List<DynamicTest> testConfidenceInterval() {
-        return Arrays.asList(
+        return List.of(
                 DynamicTest.dynamicTest("10", () -> doConfidenceInterval(
                         new double[]{
                                 200.0, 171.0, 176.0, 194.0, 148.0, 203.0, 182.0, 186.0, 176.0, 161.0}

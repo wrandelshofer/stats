@@ -3,7 +3,6 @@ package ch.randelshofer.stats;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,7 +16,7 @@ class StatsTest {
 
     @TestFactory
     public List<DynamicTest> testConfidenceNorm() {
-        return Arrays.asList(
+        return List.of(
                 DynamicTest.dynamicTest("5%,1,5", () -> doConfidenceNorm(0.05, 1, 5, 0.8765225405586689)),
                 DynamicTest.dynamicTest("5%,1,10", () -> doConfidenceNorm(0.05, 1, 10, 0.6197950322918954)),
                 DynamicTest.dynamicTest("5%,1,30", () -> doConfidenceNorm(0.05, 1, 30, 0.3578388287361186)),
@@ -38,7 +37,7 @@ class StatsTest {
 
     @TestFactory
     public List<DynamicTest> testConfidenceT() {
-        return Arrays.asList(
+        return List.of(
                 DynamicTest.dynamicTest("5%,1,5", () -> doConfidenceT(0.05, 1, 5, 1.241663998204751)),
                 DynamicTest.dynamicTest("5%,1,10", () -> doConfidenceT(0.05, 1, 10, 0.7153569059712322)),
                 DynamicTest.dynamicTest("5%,1,30", () -> doConfidenceT(0.05, 1, 30, 0.37340613675212914)),

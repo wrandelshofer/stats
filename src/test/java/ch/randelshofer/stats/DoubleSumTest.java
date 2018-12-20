@@ -3,16 +3,14 @@ package ch.randelshofer.stats;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.DoubleStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DoubleSumTest {
     @TestFactory
     public List<DynamicTest> testAccept() {
-        return Arrays.asList(
+        return List.of(
                 /* Example from: https://en.wikipedia.org/wiki/Kahan_summation_algorithm#Further_enhancements */
                 DynamicTest.dynamicTest("1", () -> doTestAccept(
                         new double[]{1.0, 10e100, 1.0, -10e100}, 2)
@@ -34,7 +32,7 @@ public class DoubleSumTest {
 
     @TestFactory
     public List<DynamicTest> testCombine() {
-        return Arrays.asList(
+        return List.of(
                 /* Example from: https://en.wikipedia.org/wiki/Kahan_summation_algorithm#Further_enhancements */
                 DynamicTest.dynamicTest("1", () -> doTestCombine(
                         new double[]{1.0, 10e100, 1.0, -10e100}, 2)
