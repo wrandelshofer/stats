@@ -40,7 +40,7 @@ public class SampleStatistics extends DoubleSummaryStatistics {
     /** We use e DoubleSummaryStatistics here, because it can sum
      * doubles with compensation.
      */
-    private DoubleSummaryStatistics sumOfSquare = new DoubleSummaryStatistics();
+    private DoubleSum sumOfSquare = new DoubleSum();
 
     /**
      * Adds a value to the sample.
