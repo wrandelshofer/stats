@@ -9,7 +9,7 @@ import java.util.stream.DoubleStream;
 import static java.lang.Math.sqrt;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class SampleStatisticsTest {
+class VarianceStatisticsTest {
     @TestFactory
     public List<DynamicTest> testConfidenceInterval() {
         return List.of(
@@ -35,14 +35,14 @@ class SampleStatisticsTest {
                                      double varPop,
                                      double var,
                                      double confidence) {
-        SampleStatistics stats = DoubleStream.of(samples).collect(SampleStatistics::new, SampleStatistics::accept, SampleStatistics::combine);
+        VarianceStatistics stats = DoubleStream.of(samples).collect(VarianceStatistics::new, VarianceStatistics::accept, VarianceStatistics::combine);
         System.out.println(stats);
         double actualMean = stats.getAverage();
-        double actualVariance=stats.getVariance();
+        double actualVariance=stats.getSampleVariance();
         double actualPopVariance=stats.getPopulationVariance();
-        double actualConfidence=stats.getConfidence(0.05);
-        double actualStdev=stats.getStandardDeviation();
+        double actualStdev=stats.getSampleStandardDeviation();
         double actualPopStdev=stats.getPopulationStandardDeviation();
+        double actualConfidence=Stats.confidence(0.05,actualStdev,stats.getCount());
 
         assertEquals(mean,actualMean,"mean");
         assertEquals(varPop,actualPopVariance,"variance of population");

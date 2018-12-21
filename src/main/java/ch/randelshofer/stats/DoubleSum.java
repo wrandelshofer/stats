@@ -5,9 +5,7 @@ import java.util.function.DoubleConsumer;
 import static java.lang.Math.abs;
 
 /**
- * A state object for collecting the sum of doubles.
- * <p>
- * This class compensates rounding errors with the Neumaier algorithm.
+ * Computes the sum of doubles with the Neumaier compensation algorithm.
  * <p>
  * Usage with a double stream:
  * <pre>
@@ -38,9 +36,9 @@ public class DoubleSum implements DoubleConsumer {
     }
 
     /**
-     * Combines the state of another {@code SampleStatistics} into this one.
+     * Combines the state of another {@code VarianceStatistics} into this one.
      *
-     * @param other another {@code SampleStatistics}
+     * @param other another {@code VarianceStatistics}
      * @return this
      */
     public DoubleSum combine(DoubleSum other) {

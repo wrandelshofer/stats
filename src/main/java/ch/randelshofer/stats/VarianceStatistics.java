@@ -1,4 +1,4 @@
-/* @(#)SampleStatistics.java
+/* @(#)VarianceStatistics.java
  * Copyright (c) 2018 Werner Randelshofer. MIT License.
  */
 package ch.randelshofer.stats;
@@ -8,27 +8,19 @@ import java.util.DoubleSummaryStatistics;
 import static java.lang.Math.sqrt;
 
 /**
- * Computes statistics for samples taken from a population of independent
- * random variables.
+ * This collector computes sample variance and population variance in
+ * addition to the values computed by {@@link DoubleSummaryStatistics}.
  * <p>
  * Usage with a double stream:
  * <pre>
- * SampleStatistics stats = doubleStream.collect(SampleStatistics::new,
- *                                               SampleStatistics::accept,
- *                                               SampleStatistics::combine);
+ * VarianceStatistics stats = doubleStream.collect(VarianceStatistics::new,
+ *                                               VarianceStatistics::accept,
+ *                                               VarianceStatistics::combine);
  * </pre>
  *
  * <p>
  * References:
  * <ul>
- * <li>Andy Georges, Dries Buytaert, Lieven Eeckhout. (2007).<br>
- * Statistically Rigorous Java Performance Evaluation.<br>
- * Department of Electronics and Information Systems, Ghent University, Belgium.<br>
- * <a href="https://dri.es/files/oopsla07-georges.pdf">link</a>.</li>
- * <li>https://stackoverflow.com/questions/36263352/java-streams-standard-deviation</li>
- * <li>Student t-Distribution.<br>
- * Wikipedia.<br>
- * <a href="https://de.wikipedia.org/wiki/Studentsche_t-Verteilung">link</a></li>
  * <li>Algorithms for calculating variance.<br>
  * Wikipedia.
  * <a href="https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Computing_shifted_data">link</a>
@@ -36,7 +28,7 @@ import static java.lang.Math.sqrt;
  * </ul>
  * </p>
  */
-public class SampleStatistics extends DoubleSummaryStatistics {
+public class VarianceStatistics extends DoubleSummaryStatistics {
     /** We use e DoubleSummaryStatistics here, because it can sum
      * doubles with compensation.
      */
@@ -54,12 +46,12 @@ public class SampleStatistics extends DoubleSummaryStatistics {
     }
 
     /**
-     * Combines the state of another {@code SampleStatistics} into this one.
+     * Combines the state of another {@code VarianceStatistics} into this one.
      *
-     * @param other another {@code SampleStatistics}
+     * @param other another {@code VarianceStatistics}
      * @return this
      */
-    public SampleStatistics combine(SampleStatistics other) {
+    public VarianceStatistics combine(VarianceStatistics other) {
         super.combine(other);
         sumOfSquare.combine(other.sumOfSquare);
         return this;
@@ -79,7 +71,7 @@ public class SampleStatistics extends DoubleSummaryStatistics {
      *
      * @return the variance of the sample
      */
-    public double getVariance() {
+    public double getSampleVariance() {
         double avg = getAverage();
         long n = getCount();
         return n > 0 ? (getSumOfSquare() - avg * avg * n) / (n - 1) : 0.0d;
@@ -90,8 +82,8 @@ public class SampleStatistics extends DoubleSummaryStatistics {
      *
      * @return the standard deviation of the sample
      */
-    public double getStandardDeviation() {
-        return sqrt(getVariance());
+    public double getSampleStandardDeviation() {
+        return sqrt(getSampleVariance());
     }
 
     /**
@@ -119,48 +111,20 @@ public class SampleStatistics extends DoubleSummaryStatistics {
     }
 
 
-    /**
-     * Returns the confidence value for a population mean using
-     * the Student's t distribution for small samples and the
-     * Normal distribution for large samples.
-     * <p>
-     * For sample sizes &lt; 30 the Student's t distribution is used.
-     * For sample sizes ≥ 30 the Normal distribution is used.
-     * <p>
-     * The confidence interval can be constructed by
-     * subtracting and adding the returned value {@code c} from the mean
-     * value: {@code [mean - c, mean + c]}.
-     * <p>
-     *
-     * @param alpha the significance level.
-     *              The confidence level equals {@code 1 - alpha}.
-     *              An alpha of 0.05 indicates a 95 percent confidence level.
-     *              Supported values: 0.05, 0.02, 0.01, 0.001.
-     * @return the confidence value {@code c}
-     */
-    public double getConfidence(double alpha) {
-        long n = getCount();
-        double stdev = getStandardDeviation();
 
-        if (n >= 30) {
-            return Stats.confidenceNorm(alpha, stdev, n);
-        } else {
-            return Stats.confidenceT(alpha, stdev, n);
-        }
-    }
 
     @Override
     public String toString() {
         return String.format(
-                "%s{count=%d, sum=%f, min=%f, avg=%f, max=%f, stdev=%f, conf95%%=%f}",
+                "%s{count=%d, sum=%f, min=%f, avg=%f, max=%f, stdevs=%f, stdevp=%f}",
                 this.getClass().getSimpleName(),
                 getCount(),
                 getSum(),
                 getMin(),
                 getAverage(),
                 getMax(),
-                getStandardDeviation(),
-                getConfidence(0.05)
+                getSampleStandardDeviation(),
+                getPopulationStandardDeviation()
         );
     }
 }
