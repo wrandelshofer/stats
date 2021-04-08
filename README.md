@@ -1,7 +1,7 @@
 # stats
 Provides classes for calculating statistics from Java streams.
 
-##DoubleSum
+## DoubleSum
 
 Computes the sum of doubles with the Neumaier compensation algorithm.
 
@@ -13,7 +13,7 @@ Usage with a double stream:
 
     double sum = stats.getSum();
 
-##VarianceStatistics
+## VarianceStatistics
 
 This collector computes sample variance and population variance in
 addition to the values computed by `java.util.DoubleSummaryStatistics`.
@@ -31,7 +31,7 @@ Usage with a double stream:
     double sstdev = stats.getSampleStandardDeviation();
     double pstdev = stats.getPopulationStandardDeviation();
 
-##Stats
+## Stats
 
 Class with static utility functions.
 
