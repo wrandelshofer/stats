@@ -1,3 +1,8 @@
+/*
+ * @(#)DoubleSum.java
+ * Copyright © 2021 Werner Randelshofer, Switzerland. MIT License.
+ */
+
 package ch.randelshofer.stats;
 
 import java.util.function.DoubleConsumer;
@@ -23,8 +28,9 @@ import static java.lang.Math.abs;
  * </p>
  */
 public class DoubleSum implements DoubleConsumer {
-    private double sum=0.0;
+    private double sum = 0.0;
     private double c = 0.0;
+
     /**
      * Adds a value to the sample.
      *
@@ -53,21 +59,21 @@ public class DoubleSum implements DoubleConsumer {
      * @return the sum of square
      */
     public double getSum() {
-        return sum+ c;
+        return sum + c;
     }
 
-    /** Performs the Neumaier Sum algorithm.
+    /**
+     * Performs the Neumaier Sum algorithm.
      *
      * @param input the new input value
      */
     private void sumWithCompensation(double input) {
         double t = sum + input;
-        if (abs(sum)>=abs(input)) {
+        if (abs(sum) >= abs(input)) {
             c += (sum - t) + input;// If sum is bigger, low-order digits of input are lost.
-        }else{
+        } else {
             c += (input - t) + sum;// Else low-order digits of sum are lost
         }
         sum = t;
     }
-
 }

@@ -1,3 +1,8 @@
+/*
+ * @(#)DoubleSumTest.java
+ * Copyright © 2021 Werner Randelshofer, Switzerland. MIT License.
+ */
+
 package ch.randelshofer.stats;
 
 import org.junit.jupiter.api.DynamicTest;

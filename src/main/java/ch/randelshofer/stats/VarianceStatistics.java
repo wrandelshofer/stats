@@ -1,5 +1,6 @@
-/* @(#)VarianceStatistics.java
- * Copyright (c) 2018 Werner Randelshofer. MIT License.
+/*
+ * @(#)VarianceStatistics.java
+ * Copyright © 2021 Werner Randelshofer, Switzerland. MIT License.
  */
 package ch.randelshofer.stats;
 
@@ -9,7 +10,7 @@ import static java.lang.Math.sqrt;
 
 /**
  * This collector computes sample variance and population variance in
- * addition to the values computed by {@@link DoubleSummaryStatistics}.
+ * addition to the values computed by {@link DoubleSummaryStatistics}.
  * <p>
  * Usage with a double stream:
  * <pre>
@@ -32,7 +33,7 @@ public class VarianceStatistics extends DoubleSummaryStatistics {
     /** We use e DoubleSummaryStatistics here, because it can sum
      * doubles with compensation.
      */
-    private DoubleSum sumOfSquare = new DoubleSum();
+    private final DoubleSum sumOfSquare = new DoubleSum();
 
     /**
      * Adds a value to the sample.

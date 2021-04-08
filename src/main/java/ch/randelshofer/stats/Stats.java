@@ -1,5 +1,6 @@
-/* @(#)Stats.java
- * Copyright (c) 2018 Werner Randelshofer. MIT License.
+/*
+ * @(#)Stats.java
+ * Copyright © 2021 Werner Randelshofer, Switzerland. MIT License.
  */
 package ch.randelshofer.stats;
 
